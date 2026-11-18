@@ -1,0 +1,16 @@
+export const AUTH_COPY = {
+  LOGIN_BADGE: 'PANEL ADMIN',
+  LOGIN_TITLE: 'Masuk sebagai Admin',
+  LOGIN_SUBTITLE: 'Kelola soal dan kendalikan jalannya sesi kuis kelas.',
+  EMAIL_LABEL: 'Email',
+  EMAIL_PLACEHOLDER: 'dosen@petra.ac.id',
+  PASSWORD_LABEL: 'Kata Sandi',
+  PASSWORD_PLACEHOLDER: 'Masukkan kata sandi',
+  SUBMIT_BUTTON: 'Masuk',
+  SUBMITTING_BUTTON: 'Memeriksa…',
+  LOGOUT_BUTTON: 'Keluar',
+  LOGIN_SUCCESS: 'Berhasil masuk ke Ruang Kontrol Admin.',
+  LOGOUT_SUCCESS: 'Anda telah keluar dari panel admin.',
+  ERROR_INVALID_CREDENTIALS: 'Email atau kata sandi tidak valid.',
+  ERROR_NOT_ADMIN: 'Akun ini tidak terdaftar sebagai admin kuis.',
+} as const;

@@ -1,0 +1,28 @@
+:root {
+  color-scheme: light;
+
+  /* Brand palette measured from reference slide (PRD §15.1) */
+  --color-cream: #f6f2e8;
+  --color-cream-strong: #ede6d6;
+  --color-navy: #17233b;
+  --color-navy-muted: rgba(23, 35, 59, 0.72);
+  --color-navy-faint: rgba(23, 35, 59, 0.12);
+  --color-blue: #2449d8;
+  --color-blue-hover: #1d3cb8;
+  --color-blue-tint: #dfe5fb;
+  --color-coral: #f36c54;
+  --color-coral-hover: #e55b42;
+  --color-coral-tint: #f9ded7;
+  --color-coral-ink: #b83a25;
+  --color-white: #ffffff;
+
+  /* Typography */
+  --font-sans:
+    var(--font-dm-sans), 'DM Sans', system-ui, -apple-system, sans-serif;
+
+  /* Radii & Spacing */
+  --radius-card: 1rem;
+  --radius-button: 0.75rem;
+  --radius-pill: 9999px;
+  --min-touch-target: 48px;
+}
