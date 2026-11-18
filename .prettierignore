@@ -1,0 +1,13 @@
+.next
+node_modules
+out
+build
+coverage
+playwright-report
+test-results
+package-lock.json
+next-env.d.ts
+PRD.md
+guide-project-nextjs.md
+AGENTS.md
+supabase/.temp

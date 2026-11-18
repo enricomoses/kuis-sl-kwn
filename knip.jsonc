@@ -1,0 +1,16 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "ignore": ["src/types/database.ts"],
+  "entry": [
+    "src/app/**/*.{ts,tsx}",
+    "tests/**/*.{test,spec}.{ts,tsx,mjs}",
+    "scripts/*.mjs",
+  ],
+  "project": [
+    "src/**/*.{ts,tsx,css}",
+    "tests/**/*.{ts,tsx,mjs}",
+    "tooling/**/*.mjs",
+    "scripts/**/*.mjs",
+    "*.config.{ts,mts,mjs}",
+  ],
+}
