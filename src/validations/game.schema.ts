@@ -241,6 +241,23 @@ export const adminGameStateSchema = z.strictObject({
 
 export const adminGameStateNullableSchema = adminGameStateSchema.nullable();
 
+export const adminLeaderboardStateSchema = z.strictObject({
+  serverNow: z.iso.datetime({ offset: true }),
+  version: z.int().min(0),
+  session: z.strictObject({
+    id: z.uuid(),
+    status: sessionStatusSchema,
+    phase: gamePhaseSchema,
+    currentIndex: z.int(),
+    totalQuestions: z.int().positive(),
+  }),
+  playerCount: z.int().min(0),
+  leaderboard: z.array(leaderboardEntrySchema),
+});
+
+export const adminLeaderboardStateNullableSchema =
+  adminLeaderboardStateSchema.nullable();
+
 export const kickPlayerResponseSchema = z.strictObject({
   kicked: z.literal(true),
   playerId: z.uuid(),

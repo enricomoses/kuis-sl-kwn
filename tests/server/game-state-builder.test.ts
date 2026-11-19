@@ -7,6 +7,7 @@ import type {
 } from '@/features/game/repository.server';
 import {
   buildAdminGameState,
+  buildAdminLeaderboardState,
   buildPlayerState,
 } from '@/features/game/service.server';
 
@@ -164,5 +165,20 @@ describe('game state builders (PRD §11.3 & §19)', () => {
     });
     expect(revealAdmin.session.phase).toBe('reveal');
     expect(revealAdmin.distribution).toEqual({ true: 1, false: 0 });
+  });
+
+  it('builds projection-safe AdminLeaderboardState without question or answer key fields', () => {
+    const state = buildAdminLeaderboardState({
+      session: sampleSession,
+      leaderboard: sampleLeaderboard,
+      serverNowIso: '2026-11-19T06:00:10.000Z',
+    });
+
+    expect(state.session.phase).toBe('question');
+    expect(state.playerCount).toBe(1);
+    expect(state.leaderboard[0]?.name).toBe('Budi');
+    expect('currentQuestion' in state).toBe(false);
+    expect('correctOptionId' in state).toBe(false);
+    expect('joinPin' in state.session).toBe(false);
   });
 });

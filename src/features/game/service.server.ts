@@ -6,6 +6,7 @@ import { REALTIME_CHANNELS } from '@/constants/realtime.constant';
 import { publishHint } from '@/features/realtime/publisher.server';
 import type {
   AdminGameState,
+  AdminLeaderboardState,
   AdminSessionActionRequest,
   CreateSessionRequest,
   KickPlayerResponse,
@@ -20,6 +21,7 @@ import { buildLeaderboardCsv } from '@/utils/csv';
 import { resolvePhase } from '@/utils/game-phase';
 import {
   adminGameStateSchema,
+  adminLeaderboardStateSchema,
   playerStateSchema,
   sessionHistoryResponseSchema,
   sessionResultsResponseSchema,
@@ -314,6 +316,86 @@ async function hydrateAdminGameState(
     players,
     currentQuestion: questions[0] ?? null,
     questionAnswers,
+    leaderboard,
+    serverNowIso,
+  });
+}
+
+const RECENT_FINISHED_DISPLAY_WINDOW_MS = 60 * 60 * 1000;
+
+interface BuildAdminLeaderboardStateInput {
+  session: GameSessionRow;
+  leaderboard: readonly LeaderboardRpcRow[];
+  serverNowIso: string;
+}
+
+/**
+ * Pure state builder for the projection-safe `/admin/leaderboard` screen.
+ * Validated via strict Zod schema so question text, options, and answer keys can NEVER leak.
+ */
+export function buildAdminLeaderboardState(
+  input: BuildAdminLeaderboardStateInput,
+): AdminLeaderboardState {
+  const nowMs = Date.parse(input.serverNowIso);
+  const phase = resolvePhase(
+    {
+      status: input.session.status,
+      questionStartedAt: input.session.question_started_at,
+      questionEndsAt: input.session.question_ends_at,
+      questionClosedAt: input.session.question_closed_at,
+    },
+    nowMs,
+  );
+  const leaderboard = mapLeaderboard(input.leaderboard);
+
+  return adminLeaderboardStateSchema.parse({
+    serverNow: input.serverNowIso,
+    version: input.session.state_version,
+    session: {
+      id: input.session.id,
+      status: input.session.status,
+      phase,
+      currentIndex: input.session.current_index,
+      totalQuestions: input.session.total_questions,
+    },
+    playerCount: leaderboard.length,
+    leaderboard,
+  });
+}
+
+export async function getAdminLiveLeaderboard(
+  signal?: AbortSignal,
+): Promise<AdminLeaderboardState | null> {
+  const active = await readActiveSession(signal);
+  if (active) {
+    const [leaderboard, serverNowIso] = await Promise.all([
+      rpcGetLeaderboard(active.id, undefined, signal),
+      rpcGetDbNow(signal),
+    ]);
+    return buildAdminLeaderboardState({
+      session: active,
+      leaderboard,
+      serverNowIso,
+    });
+  }
+
+  const [recentCompleted, serverNowIso] = await Promise.all([
+    readCompletedSessions(1, signal),
+    rpcGetDbNow(signal),
+  ]);
+  const latest = recentCompleted[0];
+  if (!latest || latest.status !== 'finished' || !latest.finished_at) {
+    return null;
+  }
+
+  const elapsedMs = Date.parse(serverNowIso) - Date.parse(latest.finished_at);
+  if (elapsedMs > RECENT_FINISHED_DISPLAY_WINDOW_MS) {
+    return null;
+  }
+
+  const leaderboard = await rpcGetLeaderboard(latest.id, undefined, signal);
+  return buildAdminLeaderboardState({
+    session: latest,
     leaderboard,
     serverNowIso,
   });

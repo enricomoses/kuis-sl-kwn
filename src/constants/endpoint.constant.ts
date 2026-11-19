@@ -13,6 +13,7 @@ export const API_ENDPOINTS = {
     `/admin/questions/${encodeURIComponent(id)}`,
   ADMIN_QUESTIONS_REORDER: '/admin/questions/reorder',
   ADMIN_GAME: '/admin/game',
+  ADMIN_GAME_LEADERBOARD: '/admin/game/leaderboard',
   ADMIN_GAME_ACTIONS: (id: string) =>
     `/admin/game/${encodeURIComponent(id)}/actions`,
   ADMIN_GAME_KICK_PLAYER: (id: string, playerId: string) =>

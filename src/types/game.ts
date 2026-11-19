@@ -159,6 +159,20 @@ export interface AdminGameState {
   leaderboard: LeaderboardEntry[];
 }
 
+export interface AdminLeaderboardState {
+  serverNow: string;
+  version: number;
+  session: {
+    id: string;
+    status: SessionStatus;
+    phase: GamePhase;
+    currentIndex: number;
+    totalQuestions: number;
+  };
+  playerCount: number;
+  leaderboard: LeaderboardEntry[];
+}
+
 export interface SessionHistoryItem {
   id: string;
   status: 'finished' | 'cancelled';

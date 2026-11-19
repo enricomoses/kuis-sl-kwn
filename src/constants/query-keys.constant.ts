@@ -42,6 +42,8 @@ export const QUERY_KEYS = {
     adminScopedKey('questions', identity),
   ADMIN_GAME: (identity: AdminQueryIdentity | null) =>
     adminScopedKey('game', identity),
+  ADMIN_LEADERBOARD: (identity: AdminQueryIdentity | null) =>
+    adminScopedKey('leaderboard', identity),
   ADMIN_HISTORY: (identity: AdminQueryIdentity | null) =>
     adminScopedKey('history', identity),
   ADMIN_RESULTS: (identity: AdminQueryIdentity | null, sessionId: string) =>
