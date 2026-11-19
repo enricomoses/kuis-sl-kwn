@@ -41,15 +41,15 @@ export const PHASE_LABELS = {
 } as const;
 
 export const GAME_COPY = {
-  JOIN_LABEL: 'NAMA PEMAIN',
+  JOIN_LABEL: 'Nama Pemain',
   JOIN_PLACEHOLDER: 'Masukkan namamu',
-  JOIN_PIN_LABEL: 'PIN SESI (4 DIGIT)',
+  JOIN_PIN_LABEL: 'PIN Sesi (4 digit)',
   JOIN_PIN_PLACEHOLDER: 'Masukkan 4 digit PIN',
   JOIN_BUTTON: 'Gabung',
   JOIN_SUBMITTING: 'Bergabung…',
   WAITING_FOR_SESSION_TITLE: 'Menunggu sesi dibuka…',
   WAITING_FOR_SESSION_DESC:
-    'Halaman ini akan otomatis aktif begitu guru atau admin membuka sesi kuis.',
+    'Otomatis aktif begitu guru atau admin membuka sesi kuis.',
   LOBBY_BADGE: 'RUANG TUNGGU',
   LOBBY_WAITING_ADMIN: 'Menunggu admin memulai kuis…',
   COUNTDOWN_BADGE: 'SIAP-SIAP',

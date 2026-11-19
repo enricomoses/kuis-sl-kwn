@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 import { QUERY_KEYS } from '@/constants/query-keys.constant';
@@ -10,6 +10,7 @@ import { ROUTES } from '@/constants/routes.constant';
 import { useJoinSession, usePlayMe } from '@/hooks/queries/use-play';
 import { useSessionRealtime } from '@/hooks/use-session-realtime';
 import { ApiClientError } from '@/lib/errors';
+import { notifyError } from '@/lib/toast';
 import {
   usePreferences,
   usePreferencesHydrated,
@@ -22,10 +23,6 @@ type JoinFormOutputValues = z.output<typeof joinRequestSchema>;
 
 export function useJoinFlow(initialMe?: PlayMeResponse) {
   const router = useRouter();
-  const [serverErrorState, setServerErrorState] = useState<{
-    code: string;
-    message: string;
-  } | null>(null);
   const lastPlayerName = usePreferences((s) => s.lastPlayerName);
   const setLastPlayerName = usePreferences((s) => s.setLastPlayerName);
   const prefsHydrated = usePreferencesHydrated();
@@ -67,7 +64,6 @@ export function useJoinFlow(initialMe?: PlayMeResponse) {
   }, [meQuery.data, router]);
 
   async function onSubmit(values: JoinFormOutputValues) {
-    setServerErrorState(null);
     try {
       await joinMutation.mutateAsync({
         name: values.name,
@@ -93,33 +89,25 @@ export function useJoinFlow(initialMe?: PlayMeResponse) {
           });
           return;
         }
-        setServerErrorState({ code: err.code, message: err.message });
+        notifyError(err.message, { toastId: `join-error-${err.code}` });
         return;
       }
-      setServerErrorState({
-        code: 'NETWORK_ERROR',
-        message: 'Gagal bergabung ke sesi kuis. Silakan coba lagi.',
+      notifyError('Gagal bergabung ke sesi kuis. Silakan coba lagi.', {
+        toastId: 'join-error-network',
       });
     }
   }
 
   const activeSession = meQuery.data?.session ?? null;
-  const serverError =
-    serverErrorState &&
-    !(activeSession && serverErrorState.code === 'NO_ACTIVE_SESSION')
-      ? serverErrorState.message
-      : null;
 
   return {
     form,
-    serverError,
     activeSession,
     requiresPin: Boolean(activeSession?.requiresPin),
     isLocked:
       activeSession?.status === 'running' && !activeSession.allowLateJoin,
     isLoadingMe: meQuery.isLoading,
     isSubmitting: form.formState.isSubmitting || joinMutation.isPending,
-    connectionStatus: realtime.status,
     onSubmit,
   };
 }

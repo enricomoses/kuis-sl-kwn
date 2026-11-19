@@ -28,7 +28,6 @@ function TestJoinFormWrapper({
       requiresPin={requiresPin}
       isLocked={false}
       isSubmitting={false}
-      serverError={null}
       onSubmit={form.handleSubmit(onValidSubmit)}
     />
   );

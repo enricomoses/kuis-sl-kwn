@@ -21,7 +21,6 @@ interface JoinFormProps {
   requiresPin: boolean;
   isLocked: boolean;
   isSubmitting: boolean;
-  serverError: string | null;
   onSubmit: FormEventHandler<HTMLFormElement>;
   className?: string;
 }
@@ -32,7 +31,6 @@ export function JoinForm({
   requiresPin,
   isLocked,
   isSubmitting,
-  serverError,
   onSubmit,
   className,
 }: JoinFormProps) {
@@ -42,10 +40,6 @@ export function JoinForm({
       noValidate
       className={cn('flex flex-col gap-4', className)}
     >
-      {serverError ? (
-        <FeedbackBanner tone="error">{serverError}</FeedbackBanner>
-      ) : null}
-
       {isLocked ? (
         <FeedbackBanner tone="info">
           Sesi sedang berjalan dan pendaftaran sementara dikunci oleh admin.
@@ -93,10 +87,14 @@ export function JoinForm({
         size="lg"
         loading={isSubmitting}
         loadingLabel={GAME_COPY.JOIN_SUBMITTING}
-        className="w-full"
+        className="group w-full"
       >
         <span>{GAME_COPY.JOIN_BUTTON}</span>
-        <ArrowRight size={20} aria-hidden="true" />
+        <ArrowRight
+          size={18}
+          aria-hidden="true"
+          className="transition-transform duration-150 group-hover:translate-x-0.5"
+        />
       </Button>
     </form>
   );

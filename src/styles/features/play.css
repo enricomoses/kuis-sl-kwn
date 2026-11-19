@@ -9,9 +9,10 @@
 
 .site-container {
   width: 100%;
-  max-width: 560px;
+  max-width: 448px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1.5rem;
 }
 

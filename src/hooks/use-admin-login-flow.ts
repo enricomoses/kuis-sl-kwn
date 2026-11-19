@@ -2,18 +2,16 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AUTH_COPY } from '@/constants/auth.constant';
 import { useAdminLogin } from '@/hooks/queries/use-admin-auth';
 import { ApiClientError } from '@/lib/errors';
-import { notifySuccess } from '@/lib/toast';
+import { notifyError, notifySuccess } from '@/lib/toast';
 import type { LoginRequest } from '@/types/auth';
 import { loginRequestSchema } from '@/validations/auth.schema';
 
 export function useAdminLoginFlow({ nextPath }: { nextPath: string }) {
   const router = useRouter();
-  const [serverError, setServerError] = useState<string | null>(null);
   const loginMutation = useAdminLogin();
 
   const loginForm = useForm<LoginRequest>({
@@ -22,7 +20,6 @@ export function useAdminLoginFlow({ nextPath }: { nextPath: string }) {
   });
 
   async function onSubmitLogin(values: LoginRequest) {
-    setServerError(null);
     try {
       const result = await loginMutation.mutateAsync({
         email: values.email,
@@ -44,15 +41,16 @@ export function useAdminLoginFlow({ nextPath }: { nextPath: string }) {
             message: err.fieldErrors.password[0],
           });
         }
-        setServerError(err.message);
+        notifyError(err.message, { toastId: `admin-login-error-${err.code}` });
         return;
       }
-      setServerError(AUTH_COPY.ERROR_INVALID_CREDENTIALS);
+      notifyError(AUTH_COPY.ERROR_INVALID_CREDENTIALS, {
+        toastId: 'admin-login-error-unknown',
+      });
     }
   }
 
   return {
-    serverError,
     loginForm,
     isSubmitting: loginForm.formState.isSubmitting || loginMutation.isPending,
     onSubmitLogin,

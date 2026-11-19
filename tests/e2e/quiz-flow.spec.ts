@@ -9,7 +9,7 @@ function scanAccessibility(page: Page) {
 }
 
 test.describe('Kuis Keberagaman & Antiintoleransi E2E', () => {
-  test('beranda menampilkan judul, 2 subjudul, input nama, dan lolos axe a11y', async ({
+  test('beranda menampilkan judul, logo institusi, input nama, dan lolos axe a11y', async ({
     page,
   }) => {
     await page.goto('/');
@@ -19,8 +19,12 @@ test.describe('Kuis Keberagaman & Antiintoleransi E2E', () => {
         name: 'Kuis Keberagaman & Antiintoleransi',
       }),
     ).toBeVisible();
-    await expect(page.getByText('SMP Kristen Petra 3 Surabaya')).toBeVisible();
-    await expect(page.getByText('Petra Christian University')).toBeVisible();
+    await expect(
+      page.getByRole('link', { name: /Logo SMP Kristen Petra 3 Surabaya/i }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('link', { name: /Logo Petra Christian University/i }),
+    ).toBeVisible();
     await expect(page.getByPlaceholder('Masukkan namamu')).toBeVisible();
 
     const accessibilityScan = await scanAccessibility(page);
