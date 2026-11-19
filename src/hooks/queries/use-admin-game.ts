@@ -15,11 +15,37 @@ import { adminGameService } from '@/services/admin-game.service';
 import type { AdminSessionProfile } from '@/types/auth';
 import type {
   AdminGameState,
+  AdminLeaderboardState,
   AdminSessionActionRequest,
   CreateSessionRequest,
   SessionHistoryResponse,
 } from '@/types/game';
 import { computeOffset } from '@/utils/game-timer';
+
+export function useAdminLeaderboardState(options: {
+  profile: AdminSessionProfile;
+  initialData?: AdminLeaderboardState | null;
+  lobbyConnected: boolean;
+  sessionConnected: boolean;
+}) {
+  const identity = toAdminQueryIdentity(options.profile);
+
+  return useQuery({
+    queryKey: QUERY_KEYS.ADMIN_LEADERBOARD(identity),
+    queryFn: async ({ signal }) =>
+      unwrapData(adminGameService.getLeaderboard(signal)),
+    initialData: options.initialData,
+    refetchInterval: (query) => {
+      const status = query.state.data?.session.status;
+      const isActive = status === 'lobby' || status === 'running';
+      const healthy = isActive
+        ? options.lobbyConnected && options.sessionConnected
+        : options.lobbyConnected;
+      return healthy ? false : REALTIME_LIMITS.FALLBACK_POLL_MS;
+    },
+    ...ADMIN_QUERY_DEFAULTS,
+  });
+}
 
 export function useAdminGameState(options: {
   profile: AdminSessionProfile;

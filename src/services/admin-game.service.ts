@@ -7,6 +7,7 @@ import type {
 import {
   adminGameStateNullableSchema,
   adminGameStateSchema,
+  adminLeaderboardStateNullableSchema,
   kickPlayerResponseSchema,
   sessionHistoryResponseSchema,
   sessionResultsResponseSchema,
@@ -21,6 +22,16 @@ export const adminGameService = {
         signal,
       },
       adminGameStateNullableSchema,
+    ),
+
+  getLeaderboard: (signal?: AbortSignal) =>
+    requestApi(
+      {
+        url: API_ENDPOINTS.ADMIN_GAME_LEADERBOARD,
+        method: 'GET',
+        signal,
+      },
+      adminLeaderboardStateNullableSchema,
     ),
 
   createSession: (payload: CreateSessionRequest, signal?: AbortSignal) =>

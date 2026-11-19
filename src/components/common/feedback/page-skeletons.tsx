@@ -335,6 +335,55 @@ export function AdminHistorySkeleton() {
   );
 }
 
+/** Exact-layout skeleton for the projection-safe live leaderboard (`/admin/leaderboard`). */
+export function AdminLeaderboardSkeleton() {
+  return (
+    <main
+      className="mx-auto flex min-h-dvh w-full max-w-[820px] flex-col gap-6 px-4 py-8 sm:px-6 sm:py-10"
+      role="status"
+      aria-live="polite"
+      aria-busy="true"
+    >
+      <span className="sr-only">Memuat leaderboard live…</span>
+
+      <header className="flex flex-col items-center gap-4 text-center">
+        <div className="flex items-center justify-center gap-2.5 py-1">
+          <Skeleton className="h-9 w-9 rounded-full" />
+          <span
+            aria-hidden="true"
+            className="h-6 w-px bg-[var(--color-navy-faint)]"
+          />
+          <Skeleton className="h-9 w-24" />
+        </div>
+
+        <div className="flex flex-col items-center gap-2">
+          <Skeleton className="h-3.5 w-48" />
+          <Skeleton className="h-8 w-44" />
+          <Skeleton className="h-4 w-36" />
+        </div>
+      </header>
+
+      <div className="podium-grid">
+        <Skeleton className="min-h-[132px] w-full rounded-2xl" />
+        <Skeleton className="min-h-[168px] w-full rounded-2xl" />
+        <Skeleton className="min-h-[116px] w-full rounded-2xl" />
+      </div>
+
+      <section className="admin-panel flex flex-col gap-4 p-5 sm:p-6">
+        <div className="flex items-center justify-between gap-2 border-b border-[rgba(23,35,59,0.08)] pb-3">
+          <Skeleton className="h-5 w-36" />
+          <Skeleton className="h-6 w-20 rounded-full" />
+        </div>
+        <div className="flex flex-col gap-2">
+          {[0, 1, 2, 3, 4].map((item) => (
+            <Skeleton key={item} className="h-14 w-full rounded-xl" />
+          ))}
+        </div>
+      </section>
+    </main>
+  );
+}
+
 /** Exact-layout skeleton for the session results modal in `/admin/history`. */
 export function AdminHistoryDetailSkeleton() {
   return (
