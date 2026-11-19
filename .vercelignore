@@ -1,5 +1,5 @@
-.env*.local
-coverage
-playwright-report
-test-results
-supabase
+/.env*.local
+/coverage/
+/playwright-report/
+/test-results/
+/supabase/
