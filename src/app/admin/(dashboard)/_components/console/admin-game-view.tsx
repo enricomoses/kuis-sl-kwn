@@ -1,9 +1,12 @@
 'use client';
 
+import { ExternalLink } from 'lucide-react';
 import { ConfirmDialog } from '@/components/common/feedback/confirm-dialog';
 import { ErrorState } from '@/components/common/feedback/error-state';
 import { ConnectionBadge } from '@/components/common/game/connection-badge';
 import { PageHeader } from '@/components/common/layout/page-header';
+import { buttonStyles } from '@/components/ui/button';
+import { ROUTES } from '@/constants/routes.constant';
 import { useAdminGameConsole } from '@/hooks/use-admin-game-console';
 import type { AdminSessionProfile } from '@/types/auth';
 import type { AdminGameState } from '@/types/game';
@@ -36,9 +39,24 @@ export function AdminGameView({
         title="Ruang Kontrol"
         subtitle="Proyeksikan layar ini ke kelas untuk menampilkan soal, timer, dan leaderboard."
         aside={
-          consoleCtrl.isActiveSession ? (
-            <ConnectionBadge status={consoleCtrl.connectionStatus} />
-          ) : null
+          <>
+            {consoleCtrl.isActiveSession ? (
+              <ConnectionBadge status={consoleCtrl.connectionStatus} />
+            ) : null}
+            <a
+              href={ROUTES.ADMIN_LEADERBOARD}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={buttonStyles(
+                'ghost',
+                'sm',
+                'border-[rgba(23,35,59,0.14)] bg-white hover:bg-[#faf8f4]',
+              )}
+            >
+              <span>Layar Leaderboard</span>
+              <ExternalLink size={15} aria-hidden="true" />
+            </a>
+          </>
         }
       />
 
