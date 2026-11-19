@@ -2,10 +2,10 @@
 
 import { Download } from 'lucide-react';
 import { ErrorState } from '@/components/common/feedback/error-state';
+import { AdminHistoryDetailSkeleton } from '@/components/common/feedback/page-skeletons';
 import { LeaderboardList } from '@/components/common/game/leaderboard-list';
 import { buttonStyles } from '@/components/ui/button';
 import { Dialog } from '@/components/ui/dialog';
-import { Skeleton } from '@/components/ui/skeleton';
 import type { SessionResultsResponse } from '@/types/game';
 
 interface AdminHistoryDetailDialogProps {
@@ -35,12 +35,7 @@ export function AdminHistoryDetailDialog({
       onClose={onClose}
       className={className}
     >
-      {isLoading ? (
-        <div className="space-y-3">
-          <Skeleton className="h-24 w-full" />
-          <Skeleton className="h-44 w-full" />
-        </div>
-      ) : null}
+      {isLoading ? <AdminHistoryDetailSkeleton /> : null}
 
       {isError ? (
         <ErrorState message="Gagal memuat detail hasil sesi." />

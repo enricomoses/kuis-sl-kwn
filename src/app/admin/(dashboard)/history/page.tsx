@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { connection } from 'next/server';
 import { Suspense } from 'react';
-import { Skeleton } from '@/components/ui/skeleton';
+import { AdminHistorySkeleton } from '@/components/common/feedback/page-skeletons';
 import { ROUTES } from '@/constants/routes.constant';
 import { requireAdminSession } from '@/features/auth/admin-guard.server';
 import { listGameSessionHistory } from '@/features/game/service.server';
@@ -10,16 +10,6 @@ import { AdminHistoryView } from './_components/admin-history-view';
 export const metadata: Metadata = {
   title: 'Riwayat Sesi Admin',
 };
-
-function HistorySkeleton() {
-  return (
-    <div className="space-y-4">
-      <Skeleton className="h-12 w-64" />
-      <Skeleton className="h-28 w-full" />
-      <Skeleton className="h-28 w-full" />
-    </div>
-  );
-}
 
 async function AdminHistoryContent() {
   await connection();
@@ -30,7 +20,7 @@ async function AdminHistoryContent() {
 
 export default function AdminHistoryPage() {
   return (
-    <Suspense fallback={<HistorySkeleton />}>
+    <Suspense fallback={<AdminHistorySkeleton />}>
       <AdminHistoryContent />
     </Suspense>
   );

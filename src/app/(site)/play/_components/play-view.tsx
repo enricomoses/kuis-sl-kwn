@@ -2,9 +2,9 @@
 
 import { useEffect, useRef } from 'react';
 import { ErrorState } from '@/components/common/feedback/error-state';
+import { PlayPanelSkeleton } from '@/components/common/feedback/page-skeletons';
 import { ConnectionBadge } from '@/components/common/game/connection-badge';
 import { AppBrandHeader } from '@/components/common/layout/app-brand-header';
-import { Skeleton } from '@/components/ui/skeleton';
 import { usePlayController } from '@/hooks/use-play-controller';
 import type { PlayerState } from '@/types/game';
 import { cn } from '@/utils';
@@ -55,9 +55,7 @@ export function PlayView({ initialState, className }: PlayViewProps) {
         ) : null}
       </div>
 
-      {controller.isLoading && !state ? (
-        <Skeleton className="h-72 w-full" />
-      ) : null}
+      {controller.isLoading && !state ? <PlayPanelSkeleton /> : null}
 
       {controller.isError && !state ? (
         <ErrorState

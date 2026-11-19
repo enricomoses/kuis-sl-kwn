@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { connection } from 'next/server';
 import { Suspense } from 'react';
-import { Skeleton } from '@/components/ui/skeleton';
+import { AdminConsoleSkeleton } from '@/components/common/feedback/page-skeletons';
 import { ROUTES } from '@/constants/routes.constant';
 import { requireAdminSession } from '@/features/auth/admin-guard.server';
 import { getAdminActiveGameState } from '@/features/game/service.server';
@@ -10,15 +10,6 @@ import { AdminGameView } from './_components/console/admin-game-view';
 export const metadata: Metadata = {
   title: 'Ruang Kontrol Admin',
 };
-
-function ConsoleSkeleton() {
-  return (
-    <div className="space-y-4">
-      <Skeleton className="h-12 w-64" />
-      <Skeleton className="h-96 w-full" />
-    </div>
-  );
-}
 
 async function AdminConsoleContent() {
   await connection();
@@ -29,7 +20,7 @@ async function AdminConsoleContent() {
 
 export default function AdminConsolePage() {
   return (
-    <Suspense fallback={<ConsoleSkeleton />}>
+    <Suspense fallback={<AdminConsoleSkeleton />}>
       <AdminConsoleContent />
     </Suspense>
   );

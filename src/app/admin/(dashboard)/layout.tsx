@@ -1,7 +1,7 @@
 import { connection } from 'next/server';
 import type { ReactNode } from 'react';
 import { Suspense } from 'react';
-import { Skeleton } from '@/components/ui/skeleton';
+import { AdminDashboardLayoutSkeleton } from '@/components/common/feedback/page-skeletons';
 import { ROUTES } from '@/constants/routes.constant';
 import { requireAdminSession } from '@/features/auth/admin-guard.server';
 import '@/styles/features/admin.css';
@@ -10,15 +10,6 @@ import { AdminShell } from './_components/admin-shell';
 
 interface AdminDashboardLayoutProps {
   children: ReactNode;
-}
-
-function DashboardSkeleton() {
-  return (
-    <div className="mx-auto max-w-6xl space-y-6 p-6">
-      <Skeleton className="h-14 w-full" />
-      <Skeleton className="h-80 w-full" />
-    </div>
-  );
 }
 
 async function AuthenticatedAdminShell({
@@ -33,7 +24,7 @@ export default function AdminDashboardLayout({
   children,
 }: AdminDashboardLayoutProps) {
   return (
-    <Suspense fallback={<DashboardSkeleton />}>
+    <Suspense fallback={<AdminDashboardLayoutSkeleton />}>
       <AuthenticatedAdminShell>{children}</AuthenticatedAdminShell>
     </Suspense>
   );
