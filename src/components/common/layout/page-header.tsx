@@ -19,19 +19,19 @@ export function PageHeader({
   return (
     <div
       className={cn(
-        'flex flex-wrap items-end justify-between gap-4',
+        'flex flex-wrap items-center justify-between gap-4 border-b border-[rgba(23,35,59,0.08)] pb-5',
         className,
       )}
     >
-      <div className="flex flex-col gap-1.5">
+      <div className="flex flex-col gap-1">
         {kicker ? (
           <span className="quiz-kicker quiz-kicker--blue">{kicker}</span>
         ) : null}
-        <h1 className="m-0 text-2xl font-bold text-[var(--color-navy)] sm:text-3xl">
+        <h1 className="m-0 text-[1.5rem] leading-[1.2] font-bold tracking-[-0.025em] text-[var(--color-navy)] sm:text-[1.75rem]">
           {title}
         </h1>
         {subtitle ? (
-          <p className="m-0 text-sm font-medium text-[var(--color-navy-muted)] sm:text-base">
+          <p className="m-0 text-sm font-medium text-[var(--color-navy-muted)]">
             {subtitle}
           </p>
         ) : null}

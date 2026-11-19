@@ -39,7 +39,6 @@ export function useAdminGameConsole(
     id: string;
     name: string;
   } | null>(null);
-  const [createError, setCreateError] = useState<string | null>(null);
   const [createFieldErrors, setCreateFieldErrors] = useState<
     Record<string, string[]>
   >({});
@@ -99,7 +98,6 @@ export function useAdminGameConsole(
   const kickMutation = useKickPlayer(profile);
 
   async function createSession(rawInput: CreateSessionRequest) {
-    setCreateError(null);
     setCreateFieldErrors({});
     const parsed = createSessionSchema.safeParse(rawInput);
     if (!parsed.success) {
@@ -130,8 +128,8 @@ export function useAdminGameConsole(
         err,
         'Gagal membuat sesi baru.',
       );
-      setCreateError(parsedErr.message);
       setCreateFieldErrors(parsedErr.fields);
+      notifyError(parsedErr.message, { toastId: 'session-create-error' });
       if (parsedErr.code === 'ACTIVE_SESSION_EXISTS') {
         void gameQuery.refetch();
       }
@@ -217,7 +215,6 @@ export function useAdminGameConsole(
     connectionStatus: realtime.status,
     hideLiveScores,
     toggleHideLiveScores,
-    createError,
     createFieldErrors,
     isCreating: createMutation.isPending,
     isActionPending: actionMutation.isPending,

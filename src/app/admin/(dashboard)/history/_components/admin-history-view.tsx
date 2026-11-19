@@ -3,11 +3,11 @@
 import { BarChart3, Download, Trophy, Users } from 'lucide-react';
 import { EmptyState } from '@/components/common/feedback/empty-state';
 import { ErrorState } from '@/components/common/feedback/error-state';
+import { AdminHistoryListSkeleton } from '@/components/common/feedback/page-skeletons';
 import { PageHeader } from '@/components/common/layout/page-header';
 import { Badge } from '@/components/ui/badge';
 import { Button, buttonStyles } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
 import { useAdminHistoryManager } from '@/hooks/use-admin-history';
 import type { AdminSessionProfile } from '@/types/auth';
 import type { SessionHistoryResponse } from '@/types/game';
@@ -37,16 +37,12 @@ export function AdminHistoryView({
   return (
     <div className={cn('flex flex-col gap-6', className)}>
       <PageHeader
-        kicker="ARSIP & EKSPOR"
         title="Riwayat Sesi"
         subtitle="Lihat peringkat final, akurasi tiap soal, dan unduh hasil sesi dalam format CSV."
       />
 
       {manager.isLoading && manager.items.length === 0 ? (
-        <div className="space-y-3">
-          <Skeleton className="h-28 w-full" />
-          <Skeleton className="h-28 w-full" />
-        </div>
+        <AdminHistoryListSkeleton />
       ) : null}
 
       {manager.isError ? (
@@ -67,7 +63,7 @@ export function AdminHistoryView({
         {manager.items.map((session) => (
           <Card
             key={session.id}
-            className="flex flex-wrap items-center justify-between gap-4"
+            className="admin-panel flex flex-wrap items-center justify-between gap-4"
           >
             <div className="flex flex-col gap-1.5">
               <div className="flex flex-wrap items-center gap-2">

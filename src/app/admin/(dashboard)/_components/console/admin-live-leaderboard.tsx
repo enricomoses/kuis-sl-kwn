@@ -23,13 +23,15 @@ export function AdminLiveLeaderboard({
   className,
 }: AdminLiveLeaderboardProps) {
   return (
-    <Card tone="cream" className={cn('flex flex-col gap-4', className)}>
-      <div className="flex items-center justify-between gap-2">
+    <Card className={cn('admin-panel flex flex-col gap-4', className)}>
+      <div className="flex items-center justify-between gap-2 border-b border-[rgba(23,35,59,0.08)] pb-3">
         <div className="flex flex-col gap-0.5">
-          <span className="quiz-kicker quiz-kicker--blue">LIVE TOP 10</span>
-          <h2 className="m-0 text-lg font-bold text-[var(--color-navy)]">
-            Leaderboard
+          <h2 className="m-0 text-base font-bold tracking-[-0.015em] text-[var(--color-navy)]">
+            Leaderboard Live
           </h2>
+          <span className="text-xs font-medium text-[var(--color-navy-muted)]">
+            Top 10 sementara
+          </span>
         </div>
 
         <Button

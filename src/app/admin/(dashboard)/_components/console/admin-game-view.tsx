@@ -33,9 +33,8 @@ export function AdminGameView({
   return (
     <div className={cn('flex flex-col gap-6', className)}>
       <PageHeader
-        kicker="KENDALI KUIS REALTIME"
         title="Ruang Kontrol"
-        subtitle="Proyeksikan layar ini ke kelas untuk menampilkan soal, timer, dan leaderboard live."
+        subtitle="Proyeksikan layar ini ke kelas untuk menampilkan soal, timer, dan leaderboard."
         aside={
           consoleCtrl.isActiveSession ? (
             <ConnectionBadge status={consoleCtrl.connectionStatus} />
@@ -53,7 +52,6 @@ export function AdminGameView({
       {!state ? (
         <AdminCreateSessionCard
           isCreating={consoleCtrl.isCreating}
-          error={consoleCtrl.createError}
           fieldErrors={consoleCtrl.createFieldErrors}
           onCreate={(payload) => void consoleCtrl.createSession(payload)}
         />

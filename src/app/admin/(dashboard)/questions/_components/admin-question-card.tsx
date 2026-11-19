@@ -46,19 +46,21 @@ export function AdminQuestionCard({
   className,
 }: AdminQuestionCardProps) {
   return (
-    <Card className={cn('flex flex-col gap-4', className)}>
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <div className="flex flex-wrap items-center gap-2">
-          <Badge tone="solid-blue">#{index + 1}</Badge>
+    <Card className={cn('admin-panel flex flex-col gap-4', className)}>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-[var(--color-navy-muted)]">
+          <span className="inline-flex h-6 min-w-6 items-center justify-center rounded-md bg-[var(--color-navy)] px-1.5 font-bold text-white tabular-nums">
+            {index + 1}
+          </span>
           <Badge tone="blue">{QUESTION_TYPE_LABELS[question.type]}</Badge>
-          <Badge tone="neutral">
-            <Clock size={14} aria-hidden="true" />
+          <span className="inline-flex items-center gap-1 rounded-full border border-[rgba(23,35,59,0.09)] bg-[#faf8f4] px-2.5 py-1">
+            <Clock size={13} aria-hidden="true" />
             <span>{question.timeLimitSeconds} dtk</span>
-          </Badge>
-          <Badge tone="neutral">
-            <Sparkles size={14} aria-hidden="true" />
+          </span>
+          <span className="inline-flex items-center gap-1 rounded-full border border-[rgba(23,35,59,0.09)] bg-[#faf8f4] px-2.5 py-1">
+            <Sparkles size={13} aria-hidden="true" />
             <span>{question.basePoints} poin</span>
-          </Badge>
+          </span>
         </div>
 
         <div className="flex flex-wrap items-center gap-1.5">
@@ -80,20 +82,16 @@ export function AdminQuestionCard({
           >
             <ArrowDown size={16} aria-hidden="true" />
           </Button>
-          <Button
-            variant="secondary"
-            size="sm"
-            disabled={locked}
-            onClick={onEdit}
-          >
+          <Button variant="ghost" size="sm" disabled={locked} onClick={onEdit}>
             <Pencil size={15} aria-hidden="true" />
             <span>{UI_COPY.EDIT}</span>
           </Button>
           <Button
-            variant="danger"
+            variant="ghost"
             size="sm"
             disabled={locked}
             onClick={onArchive}
+            className="text-[var(--color-coral-ink)] hover:bg-[var(--color-coral-tint)]"
           >
             <Archive size={15} aria-hidden="true" />
             <span>{UI_COPY.ARCHIVE}</span>
@@ -101,7 +99,7 @@ export function AdminQuestionCard({
         </div>
       </div>
 
-      <h2 className="m-0 text-lg leading-snug font-bold text-[var(--color-navy)]">
+      <h2 className="m-0 text-base leading-snug font-bold text-[var(--color-navy)] sm:text-lg">
         {question.prompt}
       </h2>
 
@@ -113,10 +111,10 @@ export function AdminQuestionCard({
             <div
               key={option.id}
               className={cn(
-                'flex items-center gap-2.5 rounded-xl px-3.5 py-2.5 text-sm font-semibold',
+                'flex items-center gap-2.5 rounded-[0.625rem] border px-3.5 py-2.5 text-sm font-medium',
                 isCorrect
-                  ? 'bg-[var(--color-blue-tint)] text-[var(--color-navy)] ring-2 ring-[var(--color-blue)]'
-                  : 'bg-[var(--color-cream)] text-[var(--color-navy)]',
+                  ? 'border-[rgba(36,73,216,0.3)] bg-[#eef2ff] font-semibold text-[var(--color-navy)]'
+                  : 'border-[rgba(23,35,59,0.08)] bg-[#faf8f4] text-[var(--color-navy)]',
               )}
             >
               <span className="font-bold text-[var(--color-blue)]">
@@ -135,8 +133,9 @@ export function AdminQuestionCard({
       </div>
 
       {question.explanation ? (
-        <p className="m-0 rounded-xl bg-[var(--color-cream)] px-3.5 py-2.5 text-sm font-medium text-[var(--color-navy-muted)]">
-          <strong>Penjelasan:</strong> {question.explanation}
+        <p className="m-0 rounded-[0.625rem] border border-[rgba(23,35,59,0.07)] bg-[#faf8f4] px-3.5 py-2.5 text-sm font-medium text-[var(--color-navy-muted)]">
+          <strong className="text-[var(--color-navy)]">Penjelasan:</strong>{' '}
+          {question.explanation}
         </p>
       ) : null}
     </Card>

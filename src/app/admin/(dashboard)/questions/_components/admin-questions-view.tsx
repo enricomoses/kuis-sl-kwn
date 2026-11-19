@@ -4,10 +4,10 @@ import { Lock, Plus, RefreshCw } from 'lucide-react';
 import { ConfirmDialog } from '@/components/common/feedback/confirm-dialog';
 import { EmptyState } from '@/components/common/feedback/empty-state';
 import { ErrorState } from '@/components/common/feedback/error-state';
+import { AdminQuestionCardsSkeleton } from '@/components/common/feedback/page-skeletons';
 import { PageHeader } from '@/components/common/layout/page-header';
 import { Button } from '@/components/ui/button';
 import { FeedbackBanner } from '@/components/ui/feedback';
-import { Skeleton } from '@/components/ui/skeleton';
 import { useAdminQuestionsManager } from '@/hooks/use-admin-questions-manager';
 import type { AdminSessionProfile } from '@/types/auth';
 import type { AdminQuestionListResponse } from '@/types/question';
@@ -31,7 +31,6 @@ export function AdminQuestionsView({
   return (
     <div className={cn('flex flex-col gap-6', className)}>
       <PageHeader
-        kicker="MANAJEMEN KONTEN"
         title="Bank Soal"
         subtitle={`${manager.items.length} soal aktif yang akan dipakai pada sesi berikutnya.`}
         aside={
@@ -72,10 +71,7 @@ export function AdminQuestionsView({
       ) : null}
 
       {manager.isLoading && manager.items.length === 0 ? (
-        <div className="space-y-3">
-          <Skeleton className="h-36 w-full" />
-          <Skeleton className="h-36 w-full" />
-        </div>
+        <AdminQuestionCardsSkeleton />
       ) : null}
 
       {manager.isError ? (

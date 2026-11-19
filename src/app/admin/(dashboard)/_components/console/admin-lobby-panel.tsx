@@ -25,15 +25,12 @@ export function AdminLobbyPanel({
 }: AdminLobbyPanelProps) {
   return (
     <div className={cn('flex flex-col gap-4', className)}>
-      <Card
-        tone="blue"
-        className="flex flex-wrap items-center justify-between gap-4"
-      >
+      <Card className="admin-panel flex flex-wrap items-center justify-between gap-4">
         <div className="flex flex-col gap-1">
           <span className="quiz-kicker quiz-kicker--blue">
             RUANG TUNGGU AKTIF
           </span>
-          <h2 className="m-0 text-2xl font-bold text-[var(--color-navy)]">
+          <h2 className="m-0 text-xl font-bold tracking-[-0.02em] text-[var(--color-navy)] sm:text-2xl">
             Siap Menerima Pemain
           </h2>
           <p className="m-0 text-sm font-medium text-[var(--color-navy-muted)]">
@@ -45,20 +42,20 @@ export function AdminLobbyPanel({
         </div>
 
         {joinPin ? (
-          <div className="rounded-xl bg-[var(--color-white)] px-5 py-3 text-center">
+          <div className="rounded-xl border border-[rgba(36,73,216,0.16)] bg-[#f4f7ff] px-5 py-3 text-center">
             <span className="inline-flex items-center gap-1 text-xs font-bold tracking-wider text-[var(--color-blue)] uppercase">
-              <KeyRound size={14} aria-hidden="true" />
-              <span>PIN SESI</span>
+              <KeyRound size={13} aria-hidden="true" />
+              <span>PIN Sesi</span>
             </span>
             <div className="admin-pin-display">{joinPin}</div>
           </div>
         ) : null}
       </Card>
 
-      <Card className="flex flex-col gap-4">
-        <div className="flex items-center justify-between gap-2">
+      <Card className="admin-panel flex flex-col gap-4">
+        <div className="flex flex-wrap items-center justify-between gap-2">
           <span className="inline-flex items-center gap-2 text-base font-bold text-[var(--color-navy)]">
-            <Users size={20} aria-hidden="true" />
+            <Users size={18} aria-hidden="true" />
             <span>Daftar Pemain ({players.length})</span>
           </span>
           <Badge tone={players.length > 0 ? 'blue' : 'neutral'}>
@@ -67,9 +64,9 @@ export function AdminLobbyPanel({
         </div>
 
         {players.length === 0 ? (
-          <p className="m-0 py-6 text-center text-sm font-medium text-[var(--color-navy-muted)]">
-            Belum ada pemain bergabung. Minta mahasiswa membuka halaman beranda
-            dan memasukkan nama.
+          <p className="m-0 rounded-xl border border-dashed border-[rgba(23,35,59,0.14)] bg-[#faf8f4] px-4 py-8 text-center text-sm font-medium text-[var(--color-navy-muted)]">
+            Belum ada pemain bergabung. Minta siswa membuka halaman beranda dan
+            memasukkan nama.
           </p>
         ) : (
           <div className="flex flex-wrap gap-2">

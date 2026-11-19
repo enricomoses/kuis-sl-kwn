@@ -29,13 +29,10 @@ export function AdminFinalPanel({
     <div
       className={cn('mx-auto flex w-full max-w-3xl flex-col gap-5', className)}
     >
-      <Card
-        tone="blue"
-        className="flex flex-wrap items-center justify-between gap-4"
-      >
-        <div className="flex flex-col gap-1">
+      <Card className="admin-panel flex flex-wrap items-center justify-between gap-4">
+        <div className="flex flex-col items-start gap-1.5">
           <Badge tone="solid-blue">SESI SELESAI</Badge>
-          <h2 className="m-0 text-2xl font-bold text-[var(--color-navy)]">
+          <h2 className="m-0 text-2xl font-bold tracking-[-0.02em] text-[var(--color-navy)]">
             Papan Peringkat Final
           </h2>
           <p className="m-0 text-sm font-medium text-[var(--color-navy-muted)]">
@@ -44,12 +41,12 @@ export function AdminFinalPanel({
         </div>
 
         <div className="flex flex-wrap gap-2">
-          <a href={exportUrl} className={buttonStyles('secondary', 'md')}>
-            <Download size={18} aria-hidden="true" />
+          <a href={exportUrl} className={buttonStyles('ghost', 'md')}>
+            <Download size={17} aria-hidden="true" />
             <span>Ekspor CSV</span>
           </a>
           <Button variant="primary" onClick={onNewSession}>
-            <RotateCcw size={18} aria-hidden="true" />
+            <RotateCcw size={17} aria-hidden="true" />
             <span>Sesi Baru</span>
           </Button>
         </div>
@@ -57,9 +54,9 @@ export function AdminFinalPanel({
 
       <Podium entries={leaderboard} />
 
-      <Card tone="cream" className="flex flex-col gap-3">
-        <span className="quiz-kicker quiz-kicker--blue">
-          SELURUH PESERTA (URUT SKOR TERTINGGI)
+      <Card className="admin-panel flex flex-col gap-3">
+        <span className="text-xs font-bold tracking-wider text-[var(--color-navy-muted)] uppercase">
+          Seluruh Peserta (Urut Skor Tertinggi)
         </span>
         <LeaderboardList entries={leaderboard} />
       </Card>

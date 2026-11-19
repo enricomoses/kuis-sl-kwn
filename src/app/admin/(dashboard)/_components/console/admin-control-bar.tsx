@@ -27,9 +27,8 @@ export function AdminControlBar({
 }: AdminControlBarProps) {
   return (
     <Card
-      tone="cream"
       className={cn(
-        'flex flex-wrap items-center justify-between gap-3',
+        'admin-panel flex flex-wrap items-center justify-between gap-3',
         className,
       )}
     >
