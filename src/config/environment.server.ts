@@ -25,6 +25,15 @@ export function getServerEnvironment() {
   });
 }
 
+export function isSecureCookieEnvironment(): boolean {
+  const { APP_ENV } = getServerEnvironment();
+  return (
+    APP_ENV === 'production' ||
+    APP_ENV === 'staging' ||
+    process.env.VERCEL === '1'
+  );
+}
+
 export function getSupabaseServiceRoleEnvironment() {
   const publicEnv = getPublicEnvironment();
   return parseEnvironment(serviceRoleEnvironmentSchema, {

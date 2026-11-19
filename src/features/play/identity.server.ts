@@ -5,7 +5,7 @@ import { cookies } from 'next/headers';
 import type { NextResponse } from 'next/server';
 import {
   getPlayerTokenPepper,
-  getServerEnvironment,
+  isSecureCookieEnvironment,
 } from '@/config/environment.server';
 import { GAME_LIMITS, PLAYER_COOKIE_NAME } from '@/constants/game.constant';
 
@@ -78,13 +78,12 @@ export function setPlayerCookie(
   playerId: string,
   token: string,
 ): void {
-  const { APP_ENV } = getServerEnvironment();
   response.cookies.set(
     PLAYER_COOKIE_NAME,
     formatPlayerCookieValue(playerId, token),
     {
       httpOnly: true,
-      secure: APP_ENV === 'production' || APP_ENV === 'staging',
+      secure: isSecureCookieEnvironment(),
       sameSite: 'lax',
       path: '/',
       maxAge: GAME_LIMITS.PLAYER_COOKIE_MAX_AGE_S,

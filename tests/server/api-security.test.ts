@@ -22,6 +22,26 @@ describe('API route security primitives', () => {
     );
     expect(() => assertSameOriginRequest(sameOriginReq)).not.toThrow();
 
+    const vercelProxyReq = new Request('http://internal/api/play/join', {
+      method: 'POST',
+      headers: {
+        'x-forwarded-host': 'kuis-sl-kwn.vercel.app',
+        'x-forwarded-proto': 'https, http',
+        origin: 'https://kuis-sl-kwn.vercel.app',
+      },
+    });
+    expect(() => assertSameOriginRequest(vercelProxyReq)).not.toThrow();
+
+    const hostWithProtoReq = new Request('http://internal/api/play/join', {
+      method: 'POST',
+      headers: {
+        host: 'kuis-sl-kwn.vercel.app',
+        'x-forwarded-proto': 'https',
+        origin: 'https://kuis-sl-kwn.vercel.app',
+      },
+    });
+    expect(() => assertSameOriginRequest(hostWithProtoReq)).not.toThrow();
+
     const crossOriginReq = new Request(
       'https://kuis.petra.ac.id/api/play/join',
       {

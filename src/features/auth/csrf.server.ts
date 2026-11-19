@@ -4,15 +4,19 @@ import { AuthError } from './errors.server';
 
 function getExpectedOrigin(request: Request): string {
   const url = new URL(request.url);
+  const rawProto = request.headers.get('x-forwarded-proto');
+  const proto = rawProto
+    ? rawProto.split(',')[0].trim()
+    : url.protocol.replace(':', '');
+
   const forwardedHost = request.headers.get('x-forwarded-host');
-  const forwardedProto = request.headers.get('x-forwarded-proto');
   if (forwardedHost) {
-    const proto = forwardedProto ?? url.protocol.replace(':', '');
     return `${proto}://${forwardedHost.split(',')[0].trim()}`;
   }
+
   const host = request.headers.get('host');
   if (host) {
-    return `${url.protocol}//${host}`;
+    return `${proto}://${host}`;
   }
   return url.origin;
 }
